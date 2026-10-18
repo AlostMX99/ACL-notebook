@@ -1,4 +1,4 @@
-"""Execute the project in a fresh kernel using this Python environment.
+r"""Execute the project in a fresh kernel using this Python environment.
 
 Usage: .\.venv\Scripts\python.exe run_notebook.py
 The notebook is replaced with executed outputs only after every cell succeeds.
@@ -32,6 +32,15 @@ def main():
 
     notebook_path = root / 'F1_Milestone1_Revised3.ipynb'
     notebook = nbformat.read(notebook_path, as_version=4)
+    # VS Code can persist a previously selected SQL kernel in notebook metadata.
+    notebook.metadata['kernelspec'] = {
+        'display_name': 'Python 3 (F1 project)',
+        'language': 'python', 'name': 'python3'}
+    notebook.metadata['language_info'] = {
+        'name': 'python', 'version': '.'.join(map(str, sys.version_info[:3])),
+        'file_extension': '.py', 'mimetype': 'text/x-python',
+        'pygments_lexer': 'ipython3', 'codemirror_mode': {
+            'name': 'ipython', 'version': 3}, 'nbconvert_exporter': 'python'}
     nbformat.validate(notebook)
     source_hash = hashlib.sha256(json.dumps(
         [(c.cell_type, c.source) for c in notebook.cells], ensure_ascii=False
@@ -100,6 +109,9 @@ def main():
         assert [c.execution_count for c in code] == list(range(1, code_count + 1))
         assert not [o for c in code for o in c.outputs if o.output_type == 'error']
         nbformat.validate(notebook)
+        # Keep a recovery copy if an editor later saves an older in-memory copy.
+        recovery_path = output_dir / 'last_successful_execution.ipynb'
+        nbformat.write(notebook, recovery_path)
         temp = notebook_path.with_suffix('.executed.tmp.ipynb')
         nbformat.write(notebook, temp)
         temp.replace(notebook_path)

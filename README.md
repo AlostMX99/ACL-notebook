@@ -24,7 +24,14 @@ require those local folders.
 2. Open `F1_Milestone1_Revised3.ipynb`.
 3. Use **Select Kernel > Python Environments** and select
    `.venv\Scripts\python.exe` from this folder.
-4. Select **Restart Kernel**, then **Run All**.
+4. Confirm the kernel label says **Python**, then select **Restart Kernel** and **Run All**.
+
+If VS Code shows **SQL** or "No connection selected", use **Select Kernel >
+Select Another Kernel > Python Environments** and choose the `.venv` Python
+above. That message comes from the SQL extension; this notebook uses Python.
+The workspace also opens `.ipynb` files with the Jupyter notebook editor.
+See the [VS Code notebook guide](https://code.visualstudio.com/docs/datascience/jupyter-notebooks)
+for the kernel picker and notebook controls.
 
 All 14 dataset CSVs are already available locally in `archive/`. Code exports
 tables, figures and fitted models to `artifacts/` by default. Execution may take
@@ -38,7 +45,9 @@ Alternatively, run all cells from a PowerShell terminal in this folder:
 
 The runner records progress in `artifacts/execution_status.json`. A failed run
 saves `artifacts/failed_execution.ipynb` for inspection and preserves the last
-successful notebook in the repo root.
+successful notebook in the repo root. A recovery copy of each successful run
+is also kept in `artifacts/last_successful_execution.ipynb`. Avoid editing or
+running the open notebook while the terminal runner is saving it.
 
 ## Set up a fresh clone
 
@@ -80,3 +89,7 @@ The repository has not been published or pushed by the setup process. Once a
 GitHub remote is configured, commit the notebook, matching PDF and small support
 files, then publish the intended repository with the visibility required by the
 course.
+
+## Verified local execution
+
+Run `20261018T210548Z` completed all **102 code cells** in 10.5 minutes with no saved cell errors. The notebook includes 51 plots, all 30 inference checks passed, and the report was checked against the same run. Model metrics match the prior audited execution within numerical precision. The analytical source is unchanged.
