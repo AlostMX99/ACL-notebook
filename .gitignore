@@ -1,0 +1,22 @@
+# Local environment and source dataset
+.venv/
+archive/
+F1 dataset/
+
+# Generated model artifacts, tables and runtime caches
+artifacts/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+*.executed.tmp.ipynb
+
+# Local credentials/configuration
+.env
+.env.*
+!.env.example
+kaggle.json
+
+# OS/editor temporary files
+Thumbs.db
+Desktop.ini
+*.log
